@@ -1,13 +1,45 @@
-game();
+let playerPoints = 0;
+let compPoints = 0;
+
+game(); //Run the Game
 
 // GETS BOTH PLAYER CHOICES AND RETURNS IF YOU WIN LOSE OR DRAW
 function game(){
-  let playerSelection = getPlayerChoice();
-  let compSelection = getCompChoice();
 
-  playRound(playerSelection, compSelection);
+  for (let i = 0; i < 3; i++) {
+    let playerSelection = getPlayerChoice();
+    let compSelection = getCompChoice();
 
+    playRound(playerSelection, compSelection);
+    console.log (`${playerPoints} : ${compPoints}`)
+  }
+  getWinner(playerPoints, compPoints);
+}
 
+//RESETS THE GAME
+function resetGame(){
+  playerPoints = 0;
+  compPoints = 0;
+}
+
+//RETURNS WINNER
+function getWinner(playerPoints,compPoints){
+  switch (true) {
+    case playerPoints > compPoints:
+      console.log("🎉Player Wins!🎉")
+      resetGame();
+      break;
+  
+    case playerPoints < compPoints:
+      console.log("💔Computer Wins!💔")
+      resetGame();
+      break;
+
+      case playerPoints === compPoints:
+      console.log("⚠You Draw!⚠")
+      resetGame();
+      break;
+  }
 }
 
 // RETURNS WHETHER YOU WIN LOSE OR DRAW
@@ -15,12 +47,14 @@ function playRound(playerSelection, compSelection){
   if (playerSelection === "rock" && compSelection === "scissors" ||
       playerSelection === "paper" && compSelection === "rock" || 
       playerSelection === "scissors" && compSelection === "paper") {
+    playerPoints += 1;
     console.log(`You Win! ${playerSelection} beats ${compSelection}!`);
     return;
 
   } else if (playerSelection === "rock" && compSelection === "paper" ||
              playerSelection === "paper" && compSelection === "scissors" || 
              playerSelection === "scissors" && compSelection === "rock"){
+    compPoints += 1;          
     console.log(`You Lose! ${compSelection} beats ${playerSelection}!`);
     return;
 
